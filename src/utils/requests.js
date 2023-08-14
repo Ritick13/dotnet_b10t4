@@ -7,20 +7,28 @@ import {
   GET_ROLES_URL
 } from './urls';
 
+const getToken = () => {
+  const token = localStorage.getItem('token'); if (token) {
+    return token.replaceAll('"', '');
+  }
+  return '';
+};
+
 // withCredentials
 const withCredentials = {
   withCredentials: true,
   headers: {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${getToken()}`
   }
 };
 
 // auth requests
-export const loginRequest = ({ email, password }) => axios.post(
+export const loginRequest = ({ employeeId, password }) => axios.post(
   LOGIN_URL,
   {
-    email,
+    employeeId,
     password
   },
   withCredentials
@@ -40,7 +48,11 @@ export const registerRequest = ({
 
 export const logoutRequest = () => axios.get(LOGOUT_URL, withCredentials);
 
-export const userRequest = () => axios.get(USER_URL, withCredentials);
+export const userRequest = (token) => axios.get(USER_URL, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+});
 
 // roles
 export const getRolesRequest = () => axios.get(`${GET_ROLES_URL}`, withCredentials);

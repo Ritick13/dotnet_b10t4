@@ -6,7 +6,8 @@ import {
 const useStyles = createStyles((theme) => ({
   wrapper: {
     paddingTop: theme.spacing.xl * 2,
-    paddingBottom: theme.spacing.xl * 2
+    paddingBottom: theme.spacing.xl * 2,
+    margin: theme.spacing.xl * 2
   },
 
   title: {

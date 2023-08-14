@@ -54,9 +54,9 @@ export function ApplyLoan() {
             withAsterisk
           />
           <TextInput
-            placeholder="Enter Employee Id"
-            label="Employee Id"
-            {...form.getInputProps('employeeid')}
+            placeholder="Enter Item Description"
+            label="Item Description"
+            {...form.getInputProps('itemDescription')}
             withAsterisk
           />
           <Select

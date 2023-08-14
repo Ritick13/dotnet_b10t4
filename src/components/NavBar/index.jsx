@@ -81,8 +81,8 @@ export function NavBar({ opened, setOpened }) {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
   const {
-    logout
-    // user
+    logout,
+    user
   } = useAuth();
 
   // const [language, setLanguage] = useState('English');
@@ -197,10 +197,8 @@ export function NavBar({ opened, setOpened }) {
       /> */}
 
       <Navbar.Section className={classes.footer}>
-        {/* {user */}
-        {/* &&  */}
-        <UserInfo employeeId={10001} designation="Manager" department="Marketing" />
-        {/* } */}
+        {user
+         && <UserInfo name={user.name} role={user.role} dept={user.dept} />}
         <UnstyledButton className={classes.link} onClick={logout}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>

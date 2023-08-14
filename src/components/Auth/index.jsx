@@ -19,7 +19,6 @@ import { registerRequest } from '../../utils/requests';
 import { useAuth } from '../../hooks/useAuth';
 import { HeaderNav } from '../Header';
 import { useLoading } from '../../hooks/useLoading';
-import { navLinks } from '../../routes/navLinks';
 
 export function Auth() {
   const [type, toggle] = useToggle(['login', 'register']);
@@ -29,21 +28,21 @@ export function Auth() {
 
   const form = useForm({
     initialValues: {
-      email: '',
+      employeeId: '',
       name: '',
       password: '',
       terms: true
     },
 
     validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
+      employeeId: (val) => (val.length === 6 ? null : 'Invalid Employee ID'),
       password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null)
     }
   });
 
   useEffect(() => {
     if (user) {
-      navigate(navLinks.filter((link) => link.label === user.tabs[0])[0].link);
+      navigate('/home');
     }
   }, [user, navigate]);
 
@@ -122,11 +121,11 @@ export function Auth() {
 
               <TextInput
                 required
-                label="Email"
-                placeholder="hello@wellsfargo.com"
+                label="Employee Id"
+                placeholder="EM1011"
                 value={form.values.email}
-                onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-                error={form.errors.email && 'Invalid email'}
+                onChange={(event) => form.setFieldValue('employeeId', event.currentTarget.value)}
+                error={form.errors.email && 'Invalid Employee Id'}
               />
 
               <PasswordInput
