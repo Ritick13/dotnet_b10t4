@@ -9,7 +9,7 @@ import {
 } from '@mantine/core';
 import {
   IconCertificate, IconInfoCircle, IconReportAnalytics, IconDeviceMobileMessage
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import PropTypes from 'prop-types';
 
 export const FEATURES = [

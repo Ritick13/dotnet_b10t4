@@ -22,25 +22,25 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function UserInfo({
-  name, email, role
+  employeeId, designation, department
 }) {
   const { classes } = useStyles();
 
   return (
     <UnstyledButton className={classes.user}>
       <Group>
-        <Avatar src={`https://avatars.dicebear.com/api/initials/${name}.svg`} radius="xl" size={40} />
+        <Avatar src={`https://avatars.dicebear.com/api/initials/${employeeId}.svg`} radius="xl" size={40} />
 
         <div style={{ flex: 1 }}>
           <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
-            {role}
+            {department}
           </Text>
           <Text size="sm" weight={500}>
-            {name}
+            {employeeId}
           </Text>
 
           <Text color="dimmed" size="xs">
-            {email}
+            {designation}
           </Text>
         </div>
 
@@ -50,7 +50,7 @@ export function UserInfo({
 }
 
 UserInfo.propTypes = {
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired
+  employeeId: PropTypes.string.isRequired,
+  designation: PropTypes.string.isRequired,
+  department: PropTypes.string.isRequired
 };

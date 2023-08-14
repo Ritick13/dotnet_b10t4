@@ -5,6 +5,7 @@ import { AuthPageContainer } from '../containers/AuthPageContainer';
 import { LandingPageContainer } from '../containers/LandingPageContainer';
 
 import { Homepage } from '../components/Home';
+import { ApplyLoan } from '../components/ApplyLoan';
 
 export const publicRoutes = [
   {
@@ -16,14 +17,21 @@ export const publicRoutes = [
     url: '/',
     component: <LandingPageContainer />,
     name: 'LandingPageContainer'
-  }
-];
-
-export const privateRoutes = [
+  },
   {
     url: '/home',
     component: <GeneralPageContainer child={<Homepage />} />,
     name: 'HomePageContainer',
     label: 'home'
+  },
+  {
+    url: '/apply-loan',
+    component: <GeneralPageContainer child={<ApplyLoan />} />,
+    name: 'ApplyLoanPageContainer',
+    label: 'apply Loan'
   }
+];
+
+export const privateRoutes = [
+
 ];

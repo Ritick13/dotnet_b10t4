@@ -1,75 +1,51 @@
 import React from 'react';
 import {
-  createStyles, Title, Center
+  Center,
+  Container, Paper, Tabs, Title
 } from '@mantine/core';
 import '@lottiefiles/lottie-player';
-import { useAuth } from '../../hooks/useAuth';
-
-const useStyles = createStyles((theme) => ({
-  root: {
-    padding: theme.spacing.xl * 1.5
-  },
-
-  title: {
-    margin: '10px 0'
-  },
-
-  paper: {
-    cursor: 'pointer'
-  },
-
-  animation: {
-    width: '80%',
-    maxWidth: '800px'
-  },
-
-  link: {
-    ...theme.fn.focusStyles(),
-    textDecoration: 'none',
-    fontSize: theme.fontSizes.sm,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
-    borderRadius: theme.radius.sm,
-    fontWeight: 500,
-    width: '100%',
-
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-      color: theme.colorScheme === 'dark' ? theme.white : theme.black
-    }
-  },
-
-  label: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`
-  }
-}));
+import { CustomTable } from './CustomTable';
+// import { useAuth } from '../../hooks/useAuth';
 
 export function Homepage() {
-  const { classes } = useStyles();
-
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   return (
-    <div className={classes.root}>
-
-      <Title className={classes.title} order={4}>
-        Welcome,
-        {' '}
-        {user.name}
-        !
-      </Title>
-
+    <Container>
       <Center>
-        <div className={classes.animation}>
-          <lottie-player
-            autoplay
-            loop
-            mode="normal"
-            src="https://assets8.lottiefiles.com/packages/lf20_pj4rwxci.json"
-          />
-        </div>
+        <Title>
+          View Products and Loans
+        </Title>
       </Center>
-
-    </div>
+      <Tabs defaultValue="Loans Availed" mt={10}>
+        <Tabs.List grow>
+          <Tabs.Tab value="Loans Availed">Loans Availed</Tabs.Tab>
+          <Tabs.Tab value="Items Purchased">Items Purchased</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="Loans Availed" pt="xs">
+          <Paper shadow="xl" p={20}>
+            <CustomTable data={[{
+              'Loan Id': 'L0001',
+              'Loan Type': 'Furniture',
+              Duration: '5',
+              'Card Issue Date': '01-02-2002'
+            }]}
+            />
+          </Paper>
+        </Tabs.Panel>
+        <Tabs.Panel value="Items Purchased" pt="xs">
+          <Paper shadow="xl" p={20}>
+            <CustomTable data={[{
+              'Item Id': '10001',
+              Description: 'Tea table',
+              'Item Make': 'Wooden',
+              'Item Category': 'Furniture',
+              Valuation: '1000'
+            }]}
+            />
+          </Paper>
+        </Tabs.Panel>
+      </Tabs>
+    </Container>
   );
 }

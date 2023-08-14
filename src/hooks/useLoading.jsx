@@ -2,7 +2,7 @@ import React, {
   createContext, useContext, useMemo
 } from 'react';
 import PropTypes from 'prop-types';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 const LoadingContext = createContext();
 
@@ -17,10 +17,10 @@ export function LoadingProvider({ children }) {
       return response;
     } catch (error) {
       setIsLoading(false);
-      showNotification({
+      notifications.show({
         color: 'red',
         title: 'Error',
-        message: error.response.data
+        message: error.response && error.response.data
                 && error.response.data.message ? error.response.data.message : error.message
       });
       return error;

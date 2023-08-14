@@ -9,7 +9,11 @@ import {
 
 // withCredentials
 const withCredentials = {
-  withCredentials: true
+  withCredentials: true,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }
 };
 
 // auth requests
@@ -23,14 +27,13 @@ export const loginRequest = ({ email, password }) => axios.post(
 );
 
 export const registerRequest = ({
-  email, name, password, role
+  email, name, password
 }) => axios.post(
   REGISTER_URL,
   {
-    email,
-    password,
-    name,
-    role
+    eMail: email,
+    passwordhashed: password,
+    employeeName: name
   },
   withCredentials
 );

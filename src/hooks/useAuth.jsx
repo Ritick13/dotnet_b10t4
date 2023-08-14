@@ -3,11 +3,10 @@ import React, {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { showNotification } from '@mantine/notifications';
-import { loginRequest, logoutRequest, userRequest } from '../utils/requests';
+import { notifications } from '@mantine/notifications';
+import { loginRequest, logoutRequest } from '../utils/requests';
 import { useLocalStorage } from './useLocalStorage';
 import { useLoading } from './useLoading';
-import { navLinks } from '../routes/navLinks';
 
 const AuthContext = createContext();
 
@@ -20,24 +19,23 @@ export function AuthProvider({ children }) {
     try {
       const response = await request(() => loginRequest(data));
       if (response.status === 200) {
-        const res = await request(userRequest);
-        setUser(res.data);
-        showNotification({
+        setUser(data);
+        notifications.show({
           title: 'Login successful'
         });
-        navigate(navLinks.filter((link) => link.label === res.data.tabs[0])[0].link);
+        navigate('/home');
       } else {
-        showNotification({
+        notifications.show({
           color: 'red',
           title: 'Login failed',
-          message: response.data.message
+          message: response.data && response.data.message
         });
       }
     } catch (error) {
-      showNotification({
+      notifications.show({
         color: 'red',
         title: 'Login failed',
-        message: error.response.data
+        message: error.response && error.response.data
             && error.response.data.message ? error.response.data.message : error.message
       });
     }
@@ -48,22 +46,22 @@ export function AuthProvider({ children }) {
       const response = await request(logoutRequest);
       if (response.status === 200) {
         navigate('/auth');
-        showNotification({
+        notifications.show({
           title: 'Logout successful'
         });
         setUser(null);
       } else {
-        showNotification({
+        notifications.show({
           color: 'red',
           title: 'Logout failed',
-          message: response.data.message
+          message: response.data && response.data.message
         });
       }
     } catch (error) {
-      showNotification({
+      notifications.show({
         color: 'red',
         title: 'Logout failed',
-        message: error.response.data
+        message: error.response && error.response.data
         && error.response.data.message ? error.response.data.message : error.message
       });
     }

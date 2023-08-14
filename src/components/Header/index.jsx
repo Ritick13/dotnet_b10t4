@@ -3,7 +3,7 @@ import {
   createStyles, Header, Container, Group, UnstyledButton, Text, Center,
   useMantineColorScheme, Burger, Paper, MediaQuery, useMantineTheme, Image
 } from '@mantine/core';
-import { IconMoon, IconSun } from '@tabler/icons';
+import { IconMoon, IconSun } from '@tabler/icons-react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.png';

@@ -115,7 +115,7 @@ export function TopLanding() {
               autoplay
               loop
               mode="normal"
-              src="https://assets2.lottiefiles.com/packages/lf20_nw19osms.json"
+              src="https://lottie.host/27edb860-1b9d-4d31-bb76-7f4a4305410f/xEBgvs8oDA.json"
             />
           </div>
         </div>
