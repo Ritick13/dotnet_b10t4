@@ -1,4 +1,3 @@
-import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import React, { useEffect } from 'react';
 import {
@@ -7,7 +6,6 @@ import {
   Paper,
   Group,
   Button,
-  Anchor,
   Stack,
   Container,
   Center,
@@ -15,16 +13,12 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useNavigate } from 'react-router-dom';
-import { registerRequest } from '../../utils/requests';
 import { useAuth } from '../../hooks/useAuth';
 import { HeaderNav } from '../Header';
-import { useLoading } from '../../hooks/useLoading';
 
 export function Auth() {
-  const [type, toggle] = useToggle(['login', 'register']);
   const navigate = useNavigate();
   const { login, user } = useAuth();
-  const { request } = useLoading();
 
   const form = useForm({
     initialValues: {
@@ -47,42 +41,15 @@ export function Auth() {
   }, [user, navigate]);
 
   const submitForm = async () => {
-    if (type === 'login') {
-      try {
-        login(form.values);
-      } catch (error) {
-        notifications.show({
-          color: 'red',
-          title: 'Login failed',
-          message: error.response.data
+    try {
+      login(form.values);
+    } catch (error) {
+      notifications.show({
+        color: 'red',
+        title: 'Login failed',
+        message: error.response.data
             && error.response.data.message ? error.response.data.message : error.message
-        });
-      }
-    } else {
-      try {
-        const response = await request(() => registerRequest(
-          form.values
-        ));
-        if (response.status === 201) {
-          notifications.show({
-            type: 'success',
-            message: 'Registration successful'
-          });
-        } else {
-          notifications.show({
-            color: 'red',
-            title: 'Registration failed',
-            message: response.data ? response.data.message : response.message
-          });
-        }
-      } catch (error) {
-        notifications.show({
-          color: 'red',
-          title: 'Registration failed',
-          message: error.response.data
-            && error.response.data.message ? error.response.data.message : error.message
-        });
-      }
+      });
     }
   };
 
@@ -95,7 +62,7 @@ export function Auth() {
             align="center"
             sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}
           >
-            {type.toLocaleUpperCase()}
+            LOGIN
           </Title>
 
           <Center>
@@ -110,14 +77,6 @@ export function Auth() {
 
           <form onSubmit={form.onSubmit(() => submitForm())}>
             <Stack>
-              {type === 'register' && (
-                <TextInput
-                  label="Name"
-                  placeholder="Your name"
-                  value={form.values.name}
-                  onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
-                />
-              )}
 
               <TextInput
                 required
@@ -139,19 +98,9 @@ export function Auth() {
 
             </Stack>
 
-            <Group position="apart" mt="xl">
-              <Anchor
-                component="button"
-                type="button"
-                color="dimmed"
-                onClick={() => toggle()}
-                size="xs"
-              >
-                {type === 'register'
-                  ? 'Already have an account? Login'
-                  : 'Don\'t have an account? Register'}
-              </Anchor>
-              <Button type="submit">{upperFirst(type)}</Button>
+            <Group position="center" mt="xl">
+
+              <Button type="submit">Login</Button>
             </Group>
           </form>
         </Paper>

@@ -38,6 +38,7 @@ const useStyles = createStyles((theme) => ({
   link: {
     ...theme.fn.focusStyles(),
     display: 'flex',
+    width: '100%',
     alignItems: 'center',
     textDecoration: 'none',
     fontSize: theme.fontSizes.sm,

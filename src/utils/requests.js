@@ -14,15 +14,15 @@ const getToken = () => {
   return '';
 };
 
-// withCredentials
-const withCredentials = {
+// withCredentials()
+const withCredentials = () => ({
   withCredentials: true,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     Authorization: `Bearer ${getToken()}`
   }
-};
+});
 
 // auth requests
 export const loginRequest = ({ employeeId, password }) => axios.post(
@@ -31,7 +31,7 @@ export const loginRequest = ({ employeeId, password }) => axios.post(
     employeeId,
     password
   },
-  withCredentials
+  withCredentials()
 );
 
 export const registerRequest = ({
@@ -43,10 +43,10 @@ export const registerRequest = ({
     passwordhashed: password,
     employeeName: name
   },
-  withCredentials
+  withCredentials()
 );
 
-export const logoutRequest = () => axios.get(LOGOUT_URL, withCredentials);
+export const logoutRequest = () => axios.get(LOGOUT_URL, withCredentials());
 
 export const userRequest = (token) => axios.get(USER_URL, {
   headers: {
@@ -55,4 +55,4 @@ export const userRequest = (token) => axios.get(USER_URL, {
 });
 
 // roles
-export const getRolesRequest = () => axios.get(`${GET_ROLES_URL}`, withCredentials);
+export const getRolesRequest = () => axios.get(`${GET_ROLES_URL}`, withCredentials());

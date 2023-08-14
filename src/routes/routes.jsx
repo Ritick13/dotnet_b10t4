@@ -17,7 +17,11 @@ export const publicRoutes = [
     url: '/',
     component: <LandingPageContainer />,
     name: 'LandingPageContainer'
-  },
+  }
+
+];
+
+export const privateRoutes = [
   {
     url: '/home',
     component: <GeneralPageContainer child={<Homepage />} />,
@@ -30,8 +34,5 @@ export const publicRoutes = [
     name: 'ApplyLoanPageContainer',
     label: 'apply Loan'
   }
-];
-
-export const privateRoutes = [
 
 ];
