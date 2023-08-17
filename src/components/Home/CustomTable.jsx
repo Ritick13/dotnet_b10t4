@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import {
   createStyles,
@@ -11,6 +10,7 @@ import {
   TextInput,
   rem
 } from '@mantine/core';
+import PropTypes from 'prop-types';
 
 import { keys } from '@mantine/utils';
 import {
@@ -58,6 +58,13 @@ function Th({
     </th>
   );
 }
+
+Th.propTypes = {
+  children: PropTypes.node.isRequired,
+  reversed: PropTypes.bool.isRequired,
+  sorted: PropTypes.bool.isRequired,
+  onSort: PropTypes.func.isRequired
+};
 
 function filterData(data, search) {
   const query = search.toLowerCase().trim();
@@ -156,3 +163,13 @@ export function CustomTable({ data }) {
     </ScrollArea>
   );
 }
+
+CustomTable.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    empId: PropTypes.string.isRequired,
+    empName: PropTypes.string.isRequired,
+    desgn: PropTypes.string.isRequired,
+    doj: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  })).isRequired
+};
