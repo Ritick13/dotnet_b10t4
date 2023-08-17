@@ -4,7 +4,7 @@ import {
   REGISTER_URL,
   LOGOUT_URL,
   USER_URL,
-  GET_ROLES_URL
+  EMPMASTERS
 } from './urls';
 
 const getToken = () => {
@@ -54,5 +54,5 @@ export const userRequest = (token) => axios.get(USER_URL, {
   }
 });
 
-// roles
-export const getRolesRequest = () => axios.get(`${GET_ROLES_URL}`, withCredentials());
+// EmpMasters
+export const postEmpMasters = (query) => axios.post(EMPMASTERS, query, withCredentials());

@@ -6,6 +6,9 @@ import { LandingPageContainer } from '../containers/LandingPageContainer';
 
 import { Homepage } from '../components/Home';
 import { ApplyLoan } from '../components/ApplyLoan';
+import { EmployeeForm } from '../components/EmployeeForm';
+import { ItemForm } from '../components/ItemForm';
+import { LoanCardForm } from '../components/LoanCardForm';
 
 export const publicRoutes = [
   {
@@ -33,6 +36,21 @@ export const privateRoutes = [
     component: <GeneralPageContainer child={<ApplyLoan />} />,
     name: 'ApplyLoanPageContainer',
     label: 'apply Loan'
+  },
+  {
+    url: '/add-employee',
+    component: <GeneralPageContainer child={<EmployeeForm />} />,
+    name: 'AddEmployeeContainer'
+  },
+  {
+    url: '/add-item',
+    component: <GeneralPageContainer child={<ItemForm />} />,
+    name: 'AddItemContainer'
+  },
+  {
+    url: '/add-loan',
+    component: <GeneralPageContainer child={<LoanCardForm />} />,
+    name: 'AddLoanCardContainer'
   }
 
 ];
