@@ -91,6 +91,7 @@ export function Auth() {
                 required
                 label="Password"
                 placeholder="********"
+                description="For employees type in Date of Birth in DD-MM-YYYY format"
                 value={form.values.password}
                 onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
                 error={form.errors.password && 'Password should include at least 6 characters'}

@@ -136,7 +136,7 @@ export function NavBar({ opened, setOpened }) {
     setActive(location.pathname);
   }, [location]);
 
-  const links = navLinks.map((item) => (
+  const links = navLinks.filter((link) => link.for === (user.role === 'Admin' ? 'admin' : 'user')).map((item) => (
   // const links = navLinks.map((item) => (
     <Link
       className={cx(classes.link, { [classes.linkActive]: (active.includes(item.link) && item.link !== '/home') || item.link === active })}

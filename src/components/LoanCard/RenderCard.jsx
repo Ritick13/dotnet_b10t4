@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { useLoading } from '../../hooks/useLoading';
 import {
-  deleteEmpMasters
+  deleteLoanCardMasters
 } from '../../utils/requests';
 
 export function RenderCard({
@@ -33,28 +33,28 @@ export function RenderCard({
       </Text>
 
       <Text fz="sm" c="dimmed">
-        {loan.duration}
+        {loan.durationYears}
       </Text>
 
       <Group position="right" mt="xl">
 
-        <Tooltip label="Edit Employee Details">
+        <Tooltip label="Edit Loan Details">
           <ActionIcon
             variant="outline"
             color="yellow"
-            onClick={() => navigate(`/edit/employee/${loan.loanId}`)}
+            onClick={() => navigate(`/edit/loan/${loan.loanId}`)}
           >
             <IconEdit size="1.1rem" />
           </ActionIcon>
         </Tooltip>
 
-        <Tooltip label="Delete Employee">
+        <Tooltip label="Delete Loan">
           <ActionIcon
             variant="outline"
             color="red"
             onClick={async () => {
-              const response = await request(() => deleteEmpMasters(loan.loanId));
-              if (response.status === 200) {
+              const response = await request(() => deleteLoanCardMasters(loan.loanId));
+              if (response.status === 204) {
                 window.location.reload();
               }
             }}
@@ -62,6 +62,7 @@ export function RenderCard({
             <IconTrash size="1.1rem" />
           </ActionIcon>
         </Tooltip>
+
       </Group>
     </Card>
   );
@@ -71,6 +72,6 @@ RenderCard.propTypes = {
   loan: PropTypes.shape({
     loanId: PropTypes.string.isRequired,
     loanType: PropTypes.string.isRequired,
-    duration: PropTypes.string.isRequired
+    durationYears: PropTypes.string.isRequired
   }).isRequired
 };

@@ -24,8 +24,9 @@ export function RenderCard({
         </Badge>
         <Badge color="orange">
           {
-            new Date().getDate() - new Date(employee.doj).getDate()
+            new Date(employee.doj).getDate() - new Date().getDate()
           }
+          {' '}
           days at Org
         </Badge>
       </Group>
@@ -59,7 +60,7 @@ export function RenderCard({
             color="red"
             onClick={async () => {
               const response = await request(() => deleteEmpMasters(employee.empId));
-              if (response.status === 200) {
+              if (response.status === 204) {
                 window.location.reload();
               }
             }}
@@ -78,7 +79,6 @@ RenderCard.propTypes = {
     empId: PropTypes.string.isRequired,
     empName: PropTypes.string.isRequired,
     desgn: PropTypes.string.isRequired,
-    doj: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
+    doj: PropTypes.string.isRequired
   }).isRequired
 };

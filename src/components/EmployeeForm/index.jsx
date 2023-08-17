@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Stack, Container, SimpleGrid, useMantineTheme, Switch,
   Title, Center, Button, TextInput, Select, Text, Flex
@@ -7,11 +7,13 @@ import { useForm } from '@mantine/form';
 import { IconGenderFemale, IconGenderMale } from '@tabler/icons-react';
 import { DateInput } from '@mantine/dates';
 import { notifications } from '@mantine/notifications';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useLoading } from '../../hooks/useLoading';
-import { postEmpMasters } from '../../utils/requests';
+import { getSingleEmpMasters, postEmpMasters, putEmpMasters } from '../../utils/requests';
 
 export function EmployeeForm() {
-//   const [data, setData] = React.useState([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const form = useForm({
     initialValues: {
@@ -29,18 +31,57 @@ export function EmployeeForm() {
 
   const handleSubmit = async () => {
     try {
-      const response = await request(() => postEmpMasters(form.values));
-      if (response.status === 200) {
-        notifications.show({
-          title: 'Success',
-          color: 'teal',
-          message: 'Staff added successfully'
-        });
+      if (!id) {
+        const response = await request(() => postEmpMasters({
+          ...form.values,
+          dob: new Date(form.values.dob.setDate(form.values.dob.getDate() + 1)),
+          doj: new Date(form.values.doj.setDate(form.values.doj.getDate() + 1))
+        }));
+        if (response.status === 201) {
+          notifications.show({
+            title: 'Success',
+            color: 'teal',
+            message: 'Staff added successfully'
+          });
+
+          navigate('/employees');
+        }
+      } else {
+        const response = await request(() => putEmpMasters(id, {
+          ...form.values,
+          dob: new Date(form.values.dob.setDate(form.values.dob.getDate() + 1)),
+          doj: new Date(form.values.doj.setDate(form.values.doj.getDate() + 1))
+        }));
+        if (response.status === 204) {
+          notifications.show({
+            title: 'Success',
+            color: 'teal',
+            message: 'Staff updated successfully'
+          });
+          navigate('/employees');
+        }
       }
     } catch (error) {
       //   console.log(error);
     }
   };
+
+  const getData = async () => {
+    const response = await request(() => getSingleEmpMasters(id));
+    if (response.status === 200) {
+      form.setValues({
+        ...response.data,
+        dob: new Date(response.data.dob),
+        doj: new Date(response.data.doj)
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getData();
+    }
+  }, [id]);
 
   const theme = useMantineTheme();
 
@@ -87,14 +128,16 @@ export function EmployeeForm() {
             ]}
           />
           <DateInput
+            valueFormat="DD/MM/YYYY"
             placeholder="Enter Date of Birth"
             label="Date of Birth"
             withAsterisk
             {...form.getInputProps('dob')}
           />
           <DateInput
+            valueFormat="DD/MM/YYYY"
             placeholder="Enter Date of Joining"
-            label="Date of Birth"
+            label="Date of Joining"
             withAsterisk
             {...form.getInputProps('doj')}
           />
@@ -135,7 +178,9 @@ export function EmployeeForm() {
           type="submit"
           onClick={handleSubmit}
         >
-          Create Employee
+          {id ? 'Update' : 'Create'}
+          {' '}
+          Employee
         </Button>
       </Center>
     </Container>

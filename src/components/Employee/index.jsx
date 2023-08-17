@@ -10,14 +10,16 @@ import {
   TextInput,
   rem,
   Container,
-  useMantineTheme
+  useMantineTheme,
+  ActionIcon
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
 import PropTypes from 'prop-types';
 import {
-  IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconEye
+  IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconEye, IconPlus
 } from '@tabler/icons-react';
 import { modals } from '@mantine/modals';
+import { useNavigate } from 'react-router-dom';
 import { getEmpMasters } from '../../utils/requests';
 import { useLoading } from '../../hooks/useLoading';
 import { RenderCard } from './RenderCard';
@@ -152,7 +154,7 @@ export function Employees() {
   };
 
   const rows = sortedData.map((row) => (
-    <tr key={row.id}>
+    <tr key={row.empId}>
       <td>
         <UnstyledButton onClick={() => displayModel(row)}>
           <IconEye size="1.2rem" />
@@ -230,6 +232,8 @@ export function Employees() {
       </td>
     </tr>
   ));
+
+  const navigate = useNavigate();
 
   const theme = useMantineTheme();
   const { classes } = useStyles();
@@ -335,6 +339,16 @@ export function Employees() {
           )}
         </tbody>
       </Table>
+      <ActionIcon
+        onClick={() => navigate('/add/employee')}
+        radius="xl"
+        color="teal"
+        size="xl"
+        variant="filled"
+        sx={{ position: 'fixed', bottom: 40, right: 40 }}
+      >
+        <IconPlus size={40} />
+      </ActionIcon>
     </Container>
   );
 }

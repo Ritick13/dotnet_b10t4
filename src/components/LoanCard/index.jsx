@@ -10,15 +10,17 @@ import {
   TextInput,
   rem,
   Container,
-  useMantineTheme
+  useMantineTheme,
+  ActionIcon
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
 import PropTypes from 'prop-types';
 import {
-  IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconEye
+  IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconEye, IconPlus
 } from '@tabler/icons-react';
 import { modals } from '@mantine/modals';
-import { getEmpMasters } from '../../utils/requests';
+import { useNavigate } from 'react-router-dom';
+import { getLoanCardMasters } from '../../utils/requests';
 import { useLoading } from '../../hooks/useLoading';
 import { RenderCard } from './RenderCard';
 
@@ -109,7 +111,7 @@ function sortData(
   );
 }
 
-export function Employees() {
+export function Loans() {
   const [search, setSearch] = useState('');
 
   const [data, setData] = useState([]);
@@ -118,8 +120,8 @@ export function Employees() {
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
   const { request } = useLoading();
 
-  const getAllEmployees = async () => {
-    const response = await request(getEmpMasters);
+  const getAllLoans = async () => {
+    const response = await request(getLoanCardMasters);
     if (response.status === 200) {
       setData(response.data);
       setSortedData(response.data);
@@ -127,7 +129,7 @@ export function Employees() {
   };
 
   useEffect(() => {
-    getAllEmployees();
+    getAllLoans();
   }, []);
 
   const setSorting = (field) => {
@@ -152,7 +154,7 @@ export function Employees() {
   };
 
   const rows = sortedData.map((row) => (
-    <tr key={row.id}>
+    <tr key={row.loanId}>
       <td>
         <UnstyledButton onClick={() => displayModel(row)}>
           <IconEye size="1.2rem" />
@@ -184,10 +186,12 @@ export function Employees() {
         textOverflow: 'ellipsis'
       }}
       >
-        {row.duration}
+        {row.durationYears}
       </td>
     </tr>
   ));
+
+  const navigate = useNavigate();
 
   const theme = useMantineTheme();
   const { classes } = useStyles();
@@ -243,11 +247,11 @@ export function Employees() {
               Loan Type
             </Th>
             <Th
-              sorted={sortBy === 'duration'}
+              sorted={sortBy === 'durationYears'}
               reversed={reverseSortDirection}
-              onSort={() => setSorting('duration')}
+              onSort={() => setSorting('durationYears')}
             >
-              Duration
+              Duration Years
             </Th>
           </tr>
         </thead>
@@ -256,7 +260,7 @@ export function Employees() {
             rows
           ) : (
             <tr>
-              <td colSpan={8}>
+              <td colSpan={4}>
                 <Text weight={500} align="center">
                   Nothing found
                 </Text>
@@ -265,6 +269,16 @@ export function Employees() {
           )}
         </tbody>
       </Table>
+      <ActionIcon
+        onClick={() => navigate('/add/loan')}
+        radius="xl"
+        color="teal"
+        size="xl"
+        variant="filled"
+        sx={{ position: 'fixed', bottom: 40, right: 40 }}
+      >
+        <IconPlus size={40} />
+      </ActionIcon>
     </Container>
   );
 }

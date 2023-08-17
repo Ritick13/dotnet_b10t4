@@ -1,42 +1,77 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Stack, Container, SimpleGrid,
-  Title, Center, Button, NumberInput, Select
+  Title, Center, Button, TextInput, Select, NumberInput
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-// import { notifications } from '@mantine/notifications';
-// import { useLoading } from '../../hooks/useLoading';
+import { notifications } from '@mantine/notifications';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useLoading } from '../../hooks/useLoading';
+import { getSingleLoanCardMasters, postLoanCardMasters, putLoanCardMasters } from '../../utils/requests';
 
 export function LoanCardForm() {
-//   const [data, setData] = React.useState([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const form = useForm({
     initialValues: {
       loanId: '',
       loanType: '',
-      duration: 0
+      durationYears: 0
     }
   });
 
-  //   const { request } = useLoading();
+  const { request } = useLoading();
 
-  //   const handleSubmit = async () => {
-  //     try {
-  //       const response = await request(() => addStaff({
-  //         staffId: data.filter((staff) => staff.value === form.values.staff)[0].id,
-  //         isActive: form.values.isActive
-  //       }));
-  //       if (response.status === 200) {
-  //         notifications.show({
-  //           title: 'Success',
-  //           color: 'teal',
-  //           message: 'Staff added successfully'
-  //         });
-  //       }
-  //     } catch (error) {
-  //     //   console.log(error);
-  //     }
-  //   };
+  const handleSubmit = async () => {
+    try {
+      if (!id) {
+        const response = await request(() => postLoanCardMasters({
+          ...form.values
+        }));
+        if (response.status === 201) {
+          notifications.show({
+            title: 'Success',
+            color: 'teal',
+            message: 'Loan added successfully'
+          });
+
+          navigate('/loans');
+        }
+      } else {
+        const response = await request(() => putLoanCardMasters(id, {
+          ...form.values
+        }));
+        if (response.status === 204) {
+          notifications.show({
+            title: 'Success',
+            color: 'teal',
+            message: 'Loan updated successfully'
+          });
+          navigate('/loans');
+        }
+      }
+    } catch (error) {
+      //   console.log(error);
+    }
+  };
+
+  const getData = async () => {
+    const response = await request(() => getSingleLoanCardMasters(id));
+    if (response.status === 200) {
+      form.setValues({
+        ...response.data,
+        dob: new Date(response.data.dob),
+        doj: new Date(response.data.doj)
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getData();
+    }
+  }, [id]);
 
   return (
     <Container>
@@ -45,7 +80,7 @@ export function LoanCardForm() {
       </Center>
       <SimpleGrid cols={1}>
         <Stack spacing="md" py={20} style={{ flex: 1 }}>
-          <NumberInput
+          <TextInput
             placeholder="Enter Loan Id"
             label="Loan Id"
             {...form.getInputProps('loanId')}
@@ -55,7 +90,7 @@ export function LoanCardForm() {
           <Select
             label="Loan Type"
             placeholder="Enter Loan Type"
-            {...form.getInputProps('loandType')}
+            {...form.getInputProps('loanType')}
             data={[
               'Wooden',
               'Plastic'
@@ -63,9 +98,9 @@ export function LoanCardForm() {
           />
 
           <NumberInput
-            placeholder="Enter Duration"
+            placeholder="Enter Duration in Years"
             label="Duration"
-            {...form.getInputProps('duration')}
+            {...form.getInputProps('durationYears')}
             withAsterisk
           />
         </Stack>
@@ -74,7 +109,7 @@ export function LoanCardForm() {
       <Center>
         <Button
           type="submit"
-        //   onClick={handleSubmit}
+          onClick={handleSubmit}
         >
           Apply Loan
         </Button>
