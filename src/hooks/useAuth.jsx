@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { notifications } from '@mantine/notifications';
 import { loginRequest, logoutRequest, userRequest } from '../utils/requests';
-import { useLocalStorage } from './useLocalStorage';
+import { useStorage } from './useStorage';
 import { useLoading } from './useLoading';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useLocalStorage('user', null);
-  const [token, setToken] = useLocalStorage('token', null);
+  const [user, setUser] = useStorage('user', null);
+  const [token, setToken] = useStorage('token', null);
   const navigate = useNavigate();
   const { request } = useLoading();
 
@@ -27,7 +27,11 @@ export function AuthProvider({ children }) {
           notifications.show({
             title: 'Login successful'
           });
-          navigate('/home');
+          if (userResponse.data.role === 'Admin') {
+            navigate('/employees');
+          } else {
+            navigate('/home');
+          }
         } else {
           notifications.show({
             color: 'red',

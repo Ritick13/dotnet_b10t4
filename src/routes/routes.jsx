@@ -9,6 +9,9 @@ import { ApplyLoan } from '../components/ApplyLoan';
 import { EmployeeForm } from '../components/EmployeeForm';
 import { ItemForm } from '../components/ItemForm';
 import { LoanCardForm } from '../components/LoanCardForm';
+import { Employees } from '../components/Employee';
+import { Loans } from '../components/LoanCard';
+import { Items } from '../components/Item';
 
 export const publicRoutes = [
   {
@@ -38,19 +41,49 @@ export const privateRoutes = [
     label: 'apply Loan'
   },
   {
-    url: '/add-employee',
+    url: '/add/employee',
     component: <GeneralPageContainer child={<EmployeeForm />} />,
     name: 'AddEmployeeContainer'
   },
   {
-    url: '/add-item',
+    url: '/edit/employee/:id',
+    component: <GeneralPageContainer child={<EmployeeForm />} />,
+    name: 'EditEmployeeContainer'
+  },
+  {
+    url: '/add/item',
     component: <GeneralPageContainer child={<ItemForm />} />,
     name: 'AddItemContainer'
   },
   {
-    url: '/add-loan',
+    url: '/edit/item/:id',
+    component: <GeneralPageContainer child={<ItemForm />} />,
+    name: 'EditItemContainer'
+  },
+  {
+    url: '/add/loan',
     component: <GeneralPageContainer child={<LoanCardForm />} />,
     name: 'AddLoanCardContainer'
+  },
+  {
+    url: '/edit/loan/:id',
+    component: <GeneralPageContainer child={<LoanCardForm />} />,
+    name: 'EditLoanCardContainer'
+  },
+  {
+    url: '/employees',
+    component: <GeneralPageContainer child={<Employees />} />,
+    name: 'Employees'
+  },
+  {
+    url: '/loans',
+    component: <GeneralPageContainer child={<Loans />} />,
+    name: 'Loans'
+  },
+  {
+    url: '/items',
+    component: <GeneralPageContainer child={<Items />} />,
+    name: 'items'
   }
 
 ];

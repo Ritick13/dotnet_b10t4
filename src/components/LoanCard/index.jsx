@@ -200,7 +200,7 @@ export function Loans() {
     <Container>
       <Center my="md">
         <Title order={2}>
-          Customer Master Data Details
+          Loan Card Master Data Details
         </Title>
       </Center>
       <TextInput

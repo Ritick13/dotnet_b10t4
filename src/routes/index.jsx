@@ -4,6 +4,8 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { LoadingOverlay } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import { ModalsProvider } from '@mantine/modals';
 import { publicRoutes, privateRoutes } from './routes';
 import { Page404 } from '../components/Page404';
 import { AuthProvider, useAuth } from '../hooks/useAuth';
@@ -14,8 +16,11 @@ export function Routers() {
   return (
     <Router>
       <AuthProvider>
-        <LoadingOverlay visible={isLoading} />
-        <Switches />
+        <ModalsProvider>
+          <Notifications />
+          <LoadingOverlay visible={isLoading} />
+          <Switches />
+        </ModalsProvider>
       </AuthProvider>
     </Router>
   );

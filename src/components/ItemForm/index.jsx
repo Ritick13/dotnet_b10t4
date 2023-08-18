@@ -141,7 +141,7 @@ export function ItemForm() {
         >
           {id ? 'Update' : 'Add'}
           {' '}
-          Data
+          Item
         </Button>
       </Center>
     </Container>

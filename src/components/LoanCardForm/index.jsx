@@ -111,7 +111,9 @@ export function LoanCardForm() {
           type="submit"
           onClick={handleSubmit}
         >
-          Apply Loan
+          {id ? 'Update' : 'Add'}
+          {' '}
+          Loan
         </Button>
       </Center>
     </Container>
