@@ -11,34 +11,18 @@ export function ApplyLoan() {
 //   const [data, setData] = React.useState([]);
 
   const form = useForm({
+    validateInputOnBlur: true,
     initialValues: {
       employeeid: '',
       itemCategory: '',
       itemDescription: '',
       itemValue: 0,
       itemMake: ''
+    },
+    validate: {
+      employeeid: (val) => (val.length === 6 ? null : 'Invalid Employee ID')
     }
   });
-
-  //   const { request } = useLoading();
-
-  //   const handleSubmit = async () => {
-  //     try {
-  //       const response = await request(() => addStaff({
-  //         staffId: data.filter((staff) => staff.value === form.values.staff)[0].id,
-  //         isActive: form.values.isActive
-  //       }));
-  //       if (response.status === 200) {
-  //         notifications.show({
-  //           title: 'Success',
-  //           color: 'teal',
-  //           message: 'Staff added successfully'
-  //         });
-  //       }
-  //     } catch (error) {
-  //     //   console.log(error);
-  //     }
-  //   };
 
   return (
     <Container>

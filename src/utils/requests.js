@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {
   LOGIN_URL,
-  REGISTER_URL,
   LOGOUT_URL,
   USER_URL,
   LOANCARDMASTERS,
@@ -32,18 +31,6 @@ export const loginRequest = ({ employeeId, password }) => axios.post(
   {
     employeeId,
     password
-  },
-  withCredentials()
-);
-
-export const registerRequest = ({
-  email, name, password
-}) => axios.post(
-  REGISTER_URL,
-  {
-    eMail: email,
-    passwordhashed: password,
-    employeeName: name
   },
   withCredentials()
 );

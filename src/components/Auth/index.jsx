@@ -21,6 +21,7 @@ export function Auth() {
   const { login, user } = useAuth();
 
   const form = useForm({
+    validateInputOnBlur: true,
     initialValues: {
       employeeId: '',
       name: '',
