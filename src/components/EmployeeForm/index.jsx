@@ -16,6 +16,7 @@ export function EmployeeForm() {
   const navigate = useNavigate();
 
   const form = useForm({
+    validateInputOnBlur: true,
     initialValues: {
       empId: '',
       desgn: '',
@@ -24,6 +25,9 @@ export function EmployeeForm() {
       dept: '',
       doj: '',
       gender: 'M'
+    },
+    validate: {
+      empId: (val) => (val.length === 6 ? null : 'Invalid Employee ID')
     }
   });
 

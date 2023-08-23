@@ -45,39 +45,37 @@ const FAQ = [
 export function Faq() {
   const { classes } = useStyles();
   return (
-    <div className={classes.wrapper}>
-      <Container size="lg">
-        <Grid id="faq-grid" gutter={50}>
-          <Col span={12} md={6}>
-            <lottie-player
-              autoplay
-              loop
-              mode="normal"
-              src="https://assets10.lottiefiles.com/packages/lf20_bd8pdzay.json"
-            />
+    <Container size="lg" my="xl">
+      <Grid id="faq-grid" gutter={50}>
+        <Col span={12} md={6}>
+          <lottie-player
+            autoplay
+            loop
+            mode="normal"
+            src="https://assets10.lottiefiles.com/packages/lf20_bd8pdzay.json"
+          />
 
-          </Col>
-          <Col span={12} md={6}>
-            <Title order={2} align="left" className={classes.title}>
-              Frequently Asked Questions
-            </Title>
+        </Col>
+        <Col span={12} md={6}>
+          <Title order={2} align="left" className={classes.title}>
+            Frequently Asked Questions
+          </Title>
 
-            <Accordion chevronPosition="right" defaultValue="what" variant="separated">
+          <Accordion chevronPosition="right" defaultValue="what" variant="separated">
 
-              {FAQ.map((item) => (
-                <Accordion.Item key={item.value} value={item.value}>
-                  <Accordion.Control>
-                    {item.question}
-                  </Accordion.Control>
-                  <Accordion.Panel>
-                    {item.answer}
-                  </Accordion.Panel>
-                </Accordion.Item>
-              ))}
-            </Accordion>
-          </Col>
-        </Grid>
-      </Container>
-    </div>
+            {FAQ.map((item) => (
+              <Accordion.Item key={item.value} value={item.value}>
+                <Accordion.Control>
+                  {item.question}
+                </Accordion.Control>
+                <Accordion.Panel>
+                  {item.answer}
+                </Accordion.Panel>
+              </Accordion.Item>
+            ))}
+          </Accordion>
+        </Col>
+      </Grid>
+    </Container>
   );
 }

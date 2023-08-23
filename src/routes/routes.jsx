@@ -12,6 +12,7 @@ import { LoanCardForm } from '../components/LoanCardForm';
 import { Employees } from '../components/Employee';
 import { Loans } from '../components/LoanCard';
 import { Items } from '../components/Item';
+import { SalaryForm } from '../components/SalaryCalculator';
 
 export const publicRoutes = [
   {
@@ -23,6 +24,10 @@ export const publicRoutes = [
     url: '/',
     component: <LandingPageContainer />,
     name: 'LandingPageContainer'
+  },
+  {
+    url: '/salary',
+    component: <SalaryForm />
   }
 
 ];

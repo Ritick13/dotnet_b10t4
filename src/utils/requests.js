@@ -5,7 +5,9 @@ import {
   USER_URL,
   LOANCARDMASTERS,
   ITEMCARDMASTERS,
-  EMPMASTERS
+  EMPMASTERS,
+  USER,
+  ITEMCARDMASTERS_FORLOAN
 } from './urls';
 
 const getToken = () => {
@@ -47,6 +49,7 @@ export const userRequest = (token) => axios.get(USER_URL, {
 export const postItemCardMasters = (query) => axios.post(ITEMCARDMASTERS, query, withCredentials());
 export const getItemCardMasters = () => axios.get(ITEMCARDMASTERS, withCredentials());
 export const getSingleItemCardMasters = (id) => axios.get(`${ITEMCARDMASTERS}/${id}`, withCredentials());
+export const getItemCardMastersForLoanType = (id) => axios.get(`${ITEMCARDMASTERS_FORLOAN}?LoanType=${id}`, withCredentials());
 export const deleteItemCardMasters = (id) => axios.delete(`${ITEMCARDMASTERS}/${id}`, withCredentials());
 export const putItemCardMasters = (id, query) => axios.put(`${ITEMCARDMASTERS}/${id}`, query, withCredentials());
 
@@ -63,3 +66,8 @@ export const getEmpMasters = () => axios.get(EMPMASTERS, withCredentials());
 export const getSingleEmpMasters = (id) => axios.get(`${EMPMASTERS}/${id}`, withCredentials());
 export const deleteEmpMasters = (id) => axios.delete(`${EMPMASTERS}/${id}`, withCredentials());
 export const putEmpMasters = (id, query) => axios.put(`${EMPMASTERS}/${id}`, query, withCredentials());
+
+// User
+// EmpMasters
+export const postUser = (query) => axios.post(USER, query, withCredentials());
+export const getUser = () => axios.get(USER, withCredentials());

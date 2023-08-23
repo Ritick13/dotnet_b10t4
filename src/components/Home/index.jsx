@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Center,
   Container, Paper, Tabs, Title
 } from '@mantine/core';
 import '@lottiefiles/lottie-player';
 import { CustomTable } from './CustomTable';
-// import { useAuth } from '../../hooks/useAuth';
+import { useLoading } from '../../hooks/useLoading';
+import { getUser } from '../../utils/requests';
 
 export function Homepage() {
-  // const { user } = useAuth();
+  const { request } = useLoading();
+
+  const [loans, setLoans] = useState([]);
+  const [items, setItems] = useState([]);
+
+  const getData = async () => {
+    const response = await request(getUser);
+    if (response.status === 200) {
+      // if (response.data.loanTable.length !== 0) {
+      setLoans(response.data.loanTable);
+      // }
+      // if (response.data.itemTable.length !== 0) {
+      setItems(response.data.itemTable);
+      // }
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Container>
@@ -24,25 +44,14 @@ export function Homepage() {
         </Tabs.List>
         <Tabs.Panel value="Loans Availed" pt="xs">
           <Paper shadow="xl" p={20}>
-            <CustomTable data={[{
-              'Loan Id': 'L0001',
-              'Loan Type': 'Furniture',
-              Duration: '5',
-              'Card Issue Date': '01-02-2002'
-            }]}
-            />
+            {loans.length ? (
+              <CustomTable data={loans} />
+            ) : null}
           </Paper>
         </Tabs.Panel>
         <Tabs.Panel value="Items Purchased" pt="xs">
           <Paper shadow="xl" p={20}>
-            <CustomTable data={[{
-              'Item Id': '10001',
-              Description: 'Tea table',
-              'Item Make': 'Wooden',
-              'Item Category': 'Furniture',
-              Valuation: '1000'
-            }]}
-            />
+            {items.length ? (<CustomTable data={items} />) : null}
           </Paper>
         </Tabs.Panel>
       </Tabs>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import {
   Stack, Container, SimpleGrid,
-  Title, Center, Button, TextInput, Select, NumberInput
+  Title, Center, Button, TextInput, NumberInput
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -14,10 +14,14 @@ export function LoanCardForm() {
   const navigate = useNavigate();
 
   const form = useForm({
+    validateInputOnBlur: true,
     initialValues: {
       loanId: '',
       loanType: '',
       durationYears: 0
+    },
+    validate: {
+      loanId: (val) => (val.length === 6 ? null : 'Invalid Loan ID')
     }
   });
 
@@ -60,9 +64,7 @@ export function LoanCardForm() {
     const response = await request(() => getSingleLoanCardMasters(id));
     if (response.status === 200) {
       form.setValues({
-        ...response.data,
-        dob: new Date(response.data.dob),
-        doj: new Date(response.data.doj)
+        ...response.data
       });
     }
   };
@@ -87,14 +89,11 @@ export function LoanCardForm() {
             withAsterisk
           />
 
-          <Select
+          <TextInput
             label="Loan Type"
             placeholder="Enter Loan Type"
             {...form.getInputProps('loanType')}
-            data={[
-              'Wooden',
-              'Plastic'
-            ]}
+            withAsterisk
           />
 
           <NumberInput

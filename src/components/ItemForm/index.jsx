@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unstable-nested-components */
+import React, { useEffect, useState, forwardRef } from 'react';
 import {
-  Stack, Container, SimpleGrid,
+  Stack, Container, SimpleGrid, Group, Text,
   Title, Center, Button, NumberInput, TextInput, Select
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -8,13 +10,16 @@ import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLoading } from '../../hooks/useLoading';
-import { getSingleItemCardMasters, postItemCardMasters, putItemCardMasters } from '../../utils/requests';
+import {
+  getLoanCardMasters, getSingleItemCardMasters, postItemCardMasters, putItemCardMasters
+} from '../../utils/requests';
 
 export function ItemForm() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const form = useForm({
+    validateInputOnBlur: true,
     initialValues: {
       itemId: '',
       itemCategory: '',
@@ -22,6 +27,9 @@ export function ItemForm() {
       itemValuation: 0,
       itemMake: '',
       itemStatus: 'Y'
+    },
+    validate: {
+      itemId: (val) => (val.length === 6 ? null : 'Invalid Item ID')
     }
   });
 
@@ -63,18 +71,49 @@ export function ItemForm() {
   const getData = async () => {
     const response = await request(() => getSingleItemCardMasters(id));
     if (response.status === 200) {
-      form.setValues({
-        ...response.data,
-        dob: new Date(response.data.dob),
-        doj: new Date(response.data.doj)
-      });
+      form.setValues(
+        response.data
+      );
     }
   };
+
+  const [loans, setLoans] = useState([]);
+
+  const getAllLoans = async () => {
+    const response = await request(getLoanCardMasters);
+    if (response.status === 200) {
+      setLoans(response.data.map((l) => ({
+        ...l,
+        value: l.loanType,
+        label: l.loanType,
+        group: `${l.durationYears} year period`
+      })));
+    }
+  };
+
+  const SelectItem = forwardRef(
+    ({
+      image, label, loanId, ...others
+    }, ref) => (
+      <div ref={ref} {...others}>
+        <Group noWrap>
+
+          <div>
+            <Text size="sm">{label}</Text>
+            <Text size="xs" opacity={0.65}>
+              {loanId}
+            </Text>
+          </div>
+        </Group>
+      </div>
+    )
+  );
 
   useEffect(() => {
     if (id) {
       getData();
     }
+    getAllLoans();
   }, [id]);
 
   return (
@@ -112,10 +151,10 @@ export function ItemForm() {
             label="Item Category"
             placeholder="Enter Item category"
             {...form.getInputProps('itemCategory')}
-            data={[
-              'Furniture',
-              'House'
-            ]}
+            itemComponent={SelectItem}
+            data={
+              loans
+            }
           />
           <NumberInput
             placeholder="Enter Item Value"
@@ -128,8 +167,8 @@ export function ItemForm() {
             placeholder="Enter Item Make"
             {...form.getInputProps('itemMake')}
             data={[
-              'Wooden',
-              'Plastic'
+              'Company Swags',
+              'From Vendors'
             ]}
           />
         </Stack>

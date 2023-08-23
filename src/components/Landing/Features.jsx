@@ -87,11 +87,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function FeaturesGrid() {
-  const { classes, theme } = useStyles();
+  const { theme } = useStyles();
   const features = FEATURES.map((feature) => <Feature {...feature} key={feature.title} />);
 
   return (
-    <Container className={classes.wrapper}>
+    <Container>
       {/* <Title className={classes.title}>
 
         Integrate effortlessly with any technology stack
