@@ -11,7 +11,8 @@ import {
   rem,
   Container,
   useMantineTheme,
-  ActionIcon
+  ActionIcon,
+  ScrollArea
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
 import PropTypes from 'prop-types';
@@ -232,93 +233,96 @@ export function Items() {
           Item Master Data Details
         </Title>
       </Center>
-      <TextInput
-        placeholder="Search by any field"
-        mb="md"
-        icon={<IconSearch size="0.9rem" stroke={1.5} />}
-        value={search}
-        onChange={handleSearchChange}
-      />
-      <Table
-        horizontalSpacing="md"
-        verticalSpacing="xs"
-        withColumnBorders
-        withBorder
-        striped
-        highlightOnHover
-        sx={{ tableLayout: 'fixed', wordWrap: 'break-word' }}
-      >
-        <thead style={{
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
-        }}
+      <ScrollArea>
+        <TextInput
+          placeholder="Search by any field"
+          mb="md"
+          icon={<IconSearch size="0.9rem" stroke={1.5} />}
+          value={search}
+          onChange={handleSearchChange}
+        />
+        <Table
+          horizontalSpacing="md"
+          verticalSpacing="xs"
+          withColumnBorders
+          withBorder
+          miw={700}
+          striped
+          highlightOnHover
+          sx={{ tableLayout: 'fixed', wordWrap: 'break-word' }}
         >
-          <tr>
-            <th
-              style={{ width: rem(50) }}
-              className={
-                classes.th
-              }
-            >
-              {' '}
-            </th>
-            <Th
-              sorted={sortBy === 'itemId'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('itemId')}
-            >
-              Item ID
-            </Th>
-            <Th
-              sorted={sortBy === 'itemDescp'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('itemDescp')}
-            >
-              Description
-            </Th>
-            <Th
-              sorted={sortBy === 'itemStatus'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('issueStatus')}
-            >
-              Status
-            </Th>
-            <Th
-              sorted={sortBy === 'itemMake'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('itemMake')}
-            >
-              Make
-            </Th>
-            <Th
-              sorted={sortBy === 'itemCategory'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('itemCategory')}
-            >
-              Category
-            </Th>
-            <Th
-              sorted={sortBy === 'itemValuation'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('itemValuation')}
-            >
-              Valuation
-            </Th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.length > 0 ? (
-            rows
-          ) : (
+          <thead style={{
+            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
+          }}
+          >
             <tr>
-              <td colSpan={7}>
-                <Text weight={500} align="center">
-                  Nothing found
-                </Text>
-              </td>
+              <th
+                style={{ width: rem(50) }}
+                className={
+                  classes.th
+                }
+              >
+                {' '}
+              </th>
+              <Th
+                sorted={sortBy === 'itemId'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('itemId')}
+              >
+                Item ID
+              </Th>
+              <Th
+                sorted={sortBy === 'itemDescp'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('itemDescp')}
+              >
+                Description
+              </Th>
+              <Th
+                sorted={sortBy === 'itemStatus'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('issueStatus')}
+              >
+                Status
+              </Th>
+              <Th
+                sorted={sortBy === 'itemMake'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('itemMake')}
+              >
+                Make
+              </Th>
+              <Th
+                sorted={sortBy === 'itemCategory'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('itemCategory')}
+              >
+                Category
+              </Th>
+              <Th
+                sorted={sortBy === 'itemValuation'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('itemValuation')}
+              >
+                Valuation
+              </Th>
             </tr>
-          )}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {rows.length > 0 ? (
+              rows
+            ) : (
+              <tr>
+                <td colSpan={7}>
+                  <Text weight={500} align="center">
+                    Nothing found
+                  </Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </ScrollArea>
       <ActionIcon
         onClick={() => navigate('/add/item')}
         radius="xl"

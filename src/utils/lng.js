@@ -1,30 +1,37 @@
 export const languages = [
   {
     code: 'en',
-    name: 'English'
+    name: 'English',
+    nativeName: 'English'
   },
   {
     code: 'hi',
-    name: 'हिन्दी'
+    name: 'Hindi',
+    nativeName: 'हिन्दी'
   },
   {
     code: 'ml',
-    name: 'മലയാളം'
+    name: 'Malayalam',
+    nativeName: 'മലയാളം'
   },
   {
     code: 'bn',
-    name: 'বাংলা'
+    name: 'Bengali',
+    nativeName: 'বাংলা'
   },
   {
     code: 'te',
-    name: 'తెలుగు'
+    name: 'Telugu',
+    nativeName: 'తెలుగు'
   },
   {
     code: 'kn',
-    name: 'ಕನ್ನಡ'
+    name: 'Kannada',
+    nativeName: 'ಕನ್ನಡ'
   },
   {
     code: 'ta',
-    name: 'தமிழ்'
+    name: 'Tamil',
+    nativeName: 'தமிழ்'
   }
 ];

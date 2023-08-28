@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   createStyles, Navbar, UnstyledButton,
-  ActionIcon,
+  ActionIcon, Select,
   useMantineColorScheme, Center, getStylesRef, rem
   // Transition
 } from '@mantine/core';
@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { useAuth } from '../../hooks/useAuth';
 import { navLinks } from '../../routes/navLinks';
 import { UserInfo } from './UserInfo';
-// import { languages } from '../../utils/lng';
+import { languages } from '../../utils/lng';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -86,51 +86,49 @@ export function NavBar({ opened, setOpened }) {
     user
   } = useAuth();
 
-  // const [language, setLanguage] = useState('English');
+  const [language, setLanguage] = useState('English');
 
-  // const magicTranslate = (lng) => {
-  //   if (lng === language) return;
-  //   setLanguage(lng);
+  const magicTranslate = (lng) => {
+    if (lng === language) return;
+    setLanguage(lng);
 
-  //   const googleTranslateIframes = document.querySelectorAll('iframe.skiptranslate');
-  //   let googleTranslateIframe = null;
-  //   if (lng !== 'English') {
-  //     for (let i = 0; i < googleTranslateIframes.length; i += 1) {
-  //       if (googleTranslateIframes[i].contentWindow.document.body.innerHTML.includes(lng)) {
-  //         googleTranslateIframe = googleTranslateIframes[i];
-  //         break;
-  //       }
-  //     }
-  //     const iframeWindow = googleTranslateIframe.contentWindow.document;
-  //     const spans = iframeWindow.getElementsByTagName('span');
-  //     for (let i = 0; i < spans.length; i += 1) {
-  //       if (spans[i].innerHTML === lng) {
-  //         spans[i].click();
-  //         break;
-  //       }
-  //     }
-  //   } else {
-  //     for (let i = 0; i < googleTranslateIframes.length; i += 1) {
-  //
-  // if (googleTranslateIframes[i].contentWindow.document.bod
-  // y.innerHTML.includes('Show original')) {
-  //         googleTranslateIframe = googleTranslateIframes[i];
-  //         break;
-  //       }
-  //     }
-  //     const iframeWindow = googleTranslateIframe.contentWindow.document;
-  //     const buttons = iframeWindow.getElementsByTagName('button');
-  //     for (let i = 0; i < buttons.length; i += 1) {
-  //       if (buttons[i].innerHTML === 'Show original') {
-  //         buttons[i].click();
-  //         break;
-  //       }
-  //     }
-  //   }
+    const googleTranslateIframes = document.querySelectorAll('iframe.skiptranslate');
+    let googleTranslateIframe = null;
+    if (lng !== 'English') {
+      for (let i = 0; i < googleTranslateIframes.length; i += 1) {
+        if (googleTranslateIframes[i].contentWindow.document.body.innerHTML.includes(lng)) {
+          googleTranslateIframe = googleTranslateIframes[i];
+          break;
+        }
+      }
+      const iframeWindow = googleTranslateIframe.contentWindow.document;
+      const spans = iframeWindow.getElementsByTagName('span');
+      for (let i = 0; i < spans.length; i += 1) {
+        if (spans[i].innerHTML === lng) {
+          spans[i].click();
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < googleTranslateIframes.length; i += 1) {
+        if (googleTranslateIframes[i].contentWindow.document.body.innerHTML.includes('Show original')) {
+          googleTranslateIframe = googleTranslateIframes[i];
+          break;
+        }
+      }
+      const iframeWindow = googleTranslateIframe.contentWindow.document;
+      const buttons = iframeWindow.getElementsByTagName('button');
+      for (let i = 0; i < buttons.length; i += 1) {
+        if (buttons[i].innerHTML === 'Show original') {
+          buttons[i].click();
+          break;
+        }
+      }
+    }
 
-  //   googleTranslateIframe = document.querySelector('iframe.skiptranslate');
-  //   googleTranslateIframe.style.display = 'none';
-  // };
+    googleTranslateIframe = document.querySelector('iframe.skiptranslate');
+    googleTranslateIframe.style.display = 'none';
+  };
 
   useEffect(() => {
     setActive(location.pathname);
@@ -181,7 +179,7 @@ export function NavBar({ opened, setOpened }) {
         </Center>
       )}
 
-      {/* <Select
+      <Select
         style={{ marginTop: 20, zIndex: 2 }}
         data={languages.map((item) => ({
           value: item.name,
@@ -195,7 +193,7 @@ export function NavBar({ opened, setOpened }) {
           magicTranslate(value);
         }}
         value={language}
-      /> */}
+      />
 
       <Navbar.Section className={classes.footer}>
         {user

@@ -40,3 +40,9 @@ html,
 body {
   overscroll-behavior-y: contain;
 }
+
+/* stylelint-disable-next-line selector-id-pattern */
+#google_translate_element {
+  height: 0;
+  visibility: hidden;
+}

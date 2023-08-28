@@ -11,7 +11,8 @@ import {
   rem,
   Container,
   useMantineTheme,
-  ActionIcon
+  ActionIcon,
+  ScrollArea
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
 import PropTypes from 'prop-types';
@@ -245,100 +246,104 @@ export function Employees() {
           Customer Master Data Details
         </Title>
       </Center>
-      <TextInput
-        placeholder="Search by any field"
-        mb="md"
-        icon={<IconSearch size="0.9rem" stroke={1.5} />}
-        value={search}
-        onChange={handleSearchChange}
-      />
-      <Table
-        horizontalSpacing="md"
-        verticalSpacing="xs"
-        withColumnBorders
-        withBorder
-        striped
-        highlightOnHover
-        sx={{ tableLayout: 'fixed', wordWrap: 'break-word' }}
-      >
-        <thead style={{
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
-        }}
+
+      <ScrollArea>
+        <TextInput
+          placeholder="Search by any field"
+          mb="md"
+          icon={<IconSearch size="0.9rem" stroke={1.5} />}
+          value={search}
+          onChange={handleSearchChange}
+        />
+        <Table
+          horizontalSpacing="md"
+          verticalSpacing="xs"
+          withColumnBorders
+          withBorder
+          striped
+          highlightOnHover
+          miw={700}
+          sx={{ tableLayout: 'fixed' }}
         >
-          <tr>
-            <th
-              style={{ width: rem(50) }}
-              className={
-                classes.th
-              }
-            >
-              {' '}
-            </th>
-            <Th
-              sorted={sortBy === 'empId'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('empId')}
-            >
-              Employee ID
-            </Th>
-            <Th
-              sorted={sortBy === 'empName'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('empName')}
-            >
-              Employee Name
-            </Th>
-            <Th
-              sorted={sortBy === 'desgn'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('desgn')}
-            >
-              Designation
-            </Th>
-            <Th
-              sorted={sortBy === 'dept'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('dept')}
-            >
-              Department
-            </Th>
-            <Th
-              sorted={sortBy === 'gender'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('gender')}
-            >
-              Gender
-            </Th>
-            <Th
-              sorted={sortBy === 'dob'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('dob')}
-            >
-              Date of Birth
-            </Th>
-            <Th
-              sorted={sortBy === 'doj'}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting('doj')}
-            >
-              Date of Joining
-            </Th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.length > 0 ? (
-            rows
-          ) : (
+          <thead style={{
+            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1]
+          }}
+          >
             <tr>
-              <td colSpan={8}>
-                <Text weight={500} align="center">
-                  Nothing found
-                </Text>
-              </td>
+              <th
+                style={{ width: rem(50) }}
+                className={
+                  classes.th
+                }
+              >
+                {' '}
+              </th>
+              <Th
+                sorted={sortBy === 'empId'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('empId')}
+              >
+                Employee ID
+              </Th>
+              <Th
+                sorted={sortBy === 'empName'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('empName')}
+              >
+                Employee Name
+              </Th>
+              <Th
+                sorted={sortBy === 'desgn'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('desgn')}
+              >
+                Designation
+              </Th>
+              <Th
+                sorted={sortBy === 'dept'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('dept')}
+              >
+                Department
+              </Th>
+              <Th
+                sorted={sortBy === 'gender'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('gender')}
+              >
+                Gender
+              </Th>
+              <Th
+                sorted={sortBy === 'dob'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('dob')}
+              >
+                Date of Birth
+              </Th>
+              <Th
+                sorted={sortBy === 'doj'}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting('doj')}
+              >
+                Date of Joining
+              </Th>
             </tr>
-          )}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {rows.length > 0 ? (
+              rows
+            ) : (
+              <tr>
+                <td colSpan={8}>
+                  <Text weight={500} align="center">
+                    Nothing found
+                  </Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </ScrollArea>
       <ActionIcon
         onClick={() => navigate('/add/employee')}
         radius="xl"
